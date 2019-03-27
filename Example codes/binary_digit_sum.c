@@ -10,5 +10,14 @@ unsigned int binary_didigt_sum(unsigned int value)
                 value >>=1;
                 printf("sum after = %d\n", sum);
                 printf("value after = %d\n", value);
+                printf("========================\n");
         }
+        return sum;
+}
+
+int main(void)
+{
+        int res = binary_didigt_sum(9);
+        printf("%d\n", res);
+        return 0;
 }
