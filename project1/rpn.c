@@ -4,6 +4,10 @@
 
 int main(int argc, char *argv[])
 {
-  DEBUG("test");
-  return 0;
+        printf("argc: %d\n", argc);
+        for (int i = 0; i < argc; i++) {
+                printf("%s\n", argv[i]);
+        }
+        DEBUG("test");
+        return 0;
 }
