@@ -1,6 +1,0 @@
-/home/bouldergoat/edaa25/project1/rpn.c: In function ‘insert’:
-/home/bouldergoat/edaa25/project1/rpn.c:15:17: error: ‘pointer’ undeclared (first use in this function); did you mean ‘n_pointer’?
-                 pointer = pointer -> next;
-                 ^~~~~~~
-                 n_pointer
-/home/bouldergoat/edaa25/project1/rpn.c:15:17: note: each undeclared identifier is reported only once for each function it appears in
