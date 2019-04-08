@@ -45,12 +45,19 @@ void append(node *n, int data)
 
 int main()
 {
-        node *list = new_list(10);
-        print_list(list);
-        append(list, 11);
-        print_list(list);
-        append(list, 12);
-        print_list(list);
-        append(list, 13);
+        int c, last_c = '\0';
+        while ((c = getchar()) != EOF)
+        {
+                if (!isspace(c)){
+                        putchar(c);
+                }
+                if (!isspace(last_c)) {
+                        putchar('\n');
+                }
+                last_c = c;
+        }
+        if (last_c != '\0' && !isspace(last_c)) {
+                putchar('\n');
+        }
         return 0;
 }
