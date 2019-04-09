@@ -68,6 +68,14 @@ int operand(int c)
         return res;
 }
 
+unsigned int concatenate(unsigned int x, unsigned int y) 
+{
+    unsigned int pow = 10;
+    while(y >= pow)
+        pow *= 10;
+    return x * pow + y;
+}
+
 int main()
 {
 
