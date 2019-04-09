@@ -17,26 +17,16 @@ void print_list(stack_node *stack_ptr)
         printf("List: \n");
         while(tmp != NULL)
         {
-<<<<<<< HEAD
-                printf("[%d, %p] -> ", tmp-> data, tmp-> next);
-                tmp = tmp-> next;
-=======
                 printf("[%d, %p] -> ", tmp-> data, tmp-> prev);
                 tmp = tmp-> prev;
->>>>>>> 44facdd963901f41e65bb5e2cfa3eb512b93210a
         }
         printf("\n");
 }
 
 stack_node *new_stack(int data)
 {
-<<<<<<< HEAD
-        node *first = malloc(sizeof(node));
-        first-> next = NULL;
-=======
         stack_node *first = malloc(sizeof(stack_node));
         first-> prev = NULL;
->>>>>>> 44facdd963901f41e65bb5e2cfa3eb512b93210a
         first-> data = data;
         return first;
 }
@@ -75,26 +65,11 @@ int operand(int c)
         if (c == '+' || c == '-' || c == '*' || c == '/') {
                 res = 1;
         }
-<<<<<<< HEAD
-        tmp-> next = malloc(sizeof(node));
-        tmp = tmp->next;
-        tmp-> next = NULL;
-        tmp-> data = data;
-=======
         return res;
->>>>>>> 44facdd963901f41e65bb5e2cfa3eb512b93210a
 }
 
 int main()
 {
-<<<<<<< HEAD
-        int c = '\0';
-        while ((c = getchar()) != EOF)
-        {
-                if (isdigit(c)){
-                        printf("\n");
-                }
-=======
 
         stack_node *stack = new_stack(-1);
         push(&stack, 10);
@@ -113,7 +88,6 @@ int main()
                         putchar(c);
                         printf("\n");
                 }
->>>>>>> 44facdd963901f41e65bb5e2cfa3eb512b93210a
         }
         return 0;
 }
