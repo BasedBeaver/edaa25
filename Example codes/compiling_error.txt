@@ -1,0 +1,4 @@
+/home/bouldergoat/edaa25/Example codes/testinc.c: In function ‘main’:
+/home/bouldergoat/edaa25/Example codes/testinc.c:7:22: error: lvalue required as increment operand
+         int c = (a++)+++b;
+                      ^~
