@@ -68,7 +68,7 @@ int operand(int c)
         return res;
 }
 
-unsigned int concatenate(unsigned int x, unsigned int y) 
+unsigned int concatenate(unsigned int x, unsigned int y)
 {
     unsigned int pow = 10;
     while(y >= pow)
@@ -88,14 +88,15 @@ int main()
         int c, last_c = '\0';
         while ((c = getchar()) != EOF)
         {
-                if (isdigit(c)) {
-                        putchar(c);
-                        printf("\n");
-                }
-                if (operand(c)) {
-                        putchar(c);
-                        printf("\n");
-                }
+                printf("%d", c);
+                // if (isdigit(c)) {
+                //         putchar(c);
+                //         printf("\n");
+                // }
+                // if (operand(c)) {
+                //         putchar(c);
+                //         printf("\n");
+                // }
         }
         return 0;
 }
