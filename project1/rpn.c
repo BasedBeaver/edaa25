@@ -88,6 +88,7 @@ int main()
         int c, last_c = '\0';
         while ((c = getchar()) != EOF)
         {
+                c = getchar();
                 printf("%d", c);
                 // if (isdigit(c)) {
                 //         putchar(c);
