@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define DEBUG(message) printf("Line [%d] - %s\n", __LINE__, message);
 
@@ -54,9 +55,14 @@ void push(stack_node **stack_ptr, int data)
         *stack_ptr = new;
 }
 
-void pop(stack_node *n_ptr)
+int pop(stack_node **stack_ptr)
 {
-
+        int res;
+        stack_node *tmp = *stack_ptr;
+        *stack_ptr = (*stack_ptr)-> prev;
+        res = tmp-> data;
+        free(tmp);
+        return res;
 }
 
 int operand(int c)
@@ -84,20 +90,26 @@ int main()
         push(&stack, 11);
         push(&stack, 12);
         print_list(stack);
+        pop(&stack);
+        print_list(stack);
 
-        int c, last_c = '\0';
+        int c = '\0';
         while ((c = getchar()) != EOF)
         {
-                c = getchar();
-                printf("%d", c);
-                // if (isdigit(c)) {
-                //         putchar(c);
-                //         printf("\n");
-                // }
-                // if (operand(c)) {
-                //         putchar(c);
-                //         printf("\n");
-                // }
+                if (isdigit(c)) {
+                        push(&stack, (c-'0'));
+                        //putchar(c);
+                        //printf("\n");
+                }
+                if (operand(c)) {
+                        putchar(c);
+                        printf("\n");
+                }
+                if (isspace(c)) {
+                        //putchar(c);
+                        //printf("\n");
+                }
         }
+        print_list(stack);
         return 0;
 }
