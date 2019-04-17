@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #define DEBUG(message) printf("Line [%d] - %s\n", __LINE__, message);
 
@@ -65,7 +66,7 @@ int pop(stack_node **stack_ptr)
         return res;
 }
 
-int operand(int c)
+int isoperand(int c)
 {
         int res = 0;
         if (c == '+' || c == '-' || c == '*' || c == '/') {
@@ -74,42 +75,114 @@ int operand(int c)
         return res;
 }
 
-unsigned int concatenate(unsigned int x, unsigned int y)
-{
-    unsigned int pow = 10;
-    while(y >= pow)
-        pow *= 10;
-    return x * pow + y;
-}
-
 int main()
 {
 
-        stack_node *stack = new_stack(-1);
-        push(&stack, 10);
-        push(&stack, 11);
-        push(&stack, 12);
-        print_list(stack);
-        pop(&stack);
-        print_list(stack);
-
+        int stack_size = 1;
+        int max_size = 11;
         int c = '\0';
-        while ((c = getchar()) != EOF)
-        {
+        int count = 0;
+        int i = 0;
+        stack_node *stack = new_stack(0);
+        _Bool should_push = false;
+
+
+        while((c = getchar()) != EOF) {
                 if (isdigit(c)) {
-                        push(&stack, (c-'0'));
-                        //putchar(c);
-                        //printf("\n");
+                        should_push = true;
+                        i = i*10 + (c - '0');
                 }
-                if (operand(c)) {
-                        putchar(c);
-                        printf("\n");
+                if (!isdigit(c)) {
+
+                        // if(stack_size < 2) {
+                        //         stack_node *stack = new_stack(i);
+                        //         stack_size++;
+                        // } else {
+                        //         push(&stack, i);
+                        //         stack_size++;
+                        // }
+
+                        if (should_push) {
+                                push(&stack, i);
+                                //printf("i is %d when pushed too stack\n", i);
+                        }
+                        i = 0;
+                        should_push = false;
                 }
-                if (isspace(c)) {
-                        //putchar(c);
-                        //printf("\n");
+                if (isoperand(c)) {
+                        char op = (char)c;
+                        int res;
+                        int b = pop(&stack);
+                        stack_size--;
+                        int a = pop(&stack);
+                        stack_size--;
+                        switch (op) {
+                                case '*':
+                                        res = a*b;
+                                        break;
+                                case '/':
+                                        res = a/b;
+                                        break;
+                                case '+':
+                                        res = a+b;
+                                        break;
+                                case '-':
+                                        res = a-b;
+                                        break;
+                        }
+                        //printf("res is %d when pushed to stack\n", res);
+                        push(&stack, res);
+                        stack_size++;
+                }
+                if (c == '\n') {
+                        int res = pop(&stack);
+                        printf("line %d: %d\n", ++count, res);
                 }
         }
-        print_list(stack);
+        // print_list(stack);
+
+        // char buff[101];
+        //
+        // while (fgets(buff, sizeof(buff), stdin))
+        // {
+        //         int n = strlen(buff);
+        //         buff[n-1] = '\0';
+
+                // int a = buff[0] - '0';
+                // int b = buff[1] - '0';
+                // char op = buff[2];
+                // int c;
+                //
+                // switch (op) {
+                //         case '*':
+                //                 c = a*b;
+                //                 break;
+                //         case '/':
+                //                 c = a/b;
+                //                 break;
+                //         case '+':
+                //                 c = a+b;
+                //                 break;
+                //         case '-':
+                //                 c = a-b;
+                //                 break;
+                // }
+                // printf("%d %c %d = %d\n", a, op, b, c);
+
+                // if (isdigit(c)) {
+                //         push(&stack, (c-'0'));
+                //         //putchar(c);
+                //         //printf("\n");
+                // }
+                // if (operand(c)) {
+                //         putchar(c);
+                //         printf("\n");
+                // }
+                // if (isspace(c)) {
+                //         //putchar(c);
+                //         //printf("\n");
+                // }
+        // }
+        // print_list(stack);
         return 0;
 }
