@@ -65,10 +65,11 @@ int isoperand(int c)
 int main()
 {
         int stack_size = 1;
-        int max_size = 11;
+        int max_size = 10;
         int c = '\0';
         int count = 0;
         int i = 0;
+        int last_digit = 0;
         stack_node *stack = new_stack(0);
         _Bool should_push = false;
 
@@ -76,37 +77,57 @@ int main()
                 if (isdigit(c)) {
                         should_push = true;
                         i = i*10 + (c - '0');
+                        last_digit = c - '0';
                 }
                 if (!isdigit(c)) {
-                        if (should_push) {
-                                push(&stack, i);
+                        if (!isoperand(c) && !isspace(c)) {
+                                printf("line %d: error at %c\n", ++count, (char)c);
+                                break;
+                        } else if (should_push) {
+                                if (stack_size < 10) {
+                                        push(&stack, i);
+                                        stack_size++;
+                                } else {
+                                        printf("line %d: error at %d\n", ++count, last_digit);
+                                        break;
+                                }
                         }
                         i = 0;
                         should_push = false;
                 }
                 if (isoperand(c)) {
                         char op = (char)c;
-                        int res;
-                        int b = pop(&stack);
-                        stack_size--;
-                        int a = pop(&stack);
-                        stack_size--;
-                        switch (op) {
-                                case '*':
-                                        res = a*b;
-                                        break;
-                                case '/':
-                                        res = a/b;
-                                        break;
-                                case '+':
-                                        res = a+b;
-                                        break;
-                                case '-':
-                                        res = a-b;
-                                        break;
+                        if (stack_size > 2) {
+                                int res;
+                                int b = pop(&stack);
+                                stack_size--;
+                                int a = pop(&stack);
+                                stack_size--;
+                                switch (op) {
+                                        case '*':
+                                                res = a*b;
+                                                break;
+                                        case '/':
+                                                if (b == 0) {
+                                                        printf("line %d: error at %c\n", ++count, op);
+                                                        break;
+                                                } else {
+                                                        res = a/b;
+                                                }
+                                                break;
+                                        case '+':
+                                                res = a+b;
+                                                break;
+                                        case '-':
+                                                res = a-b;
+                                                break;
+                                }
+                                push(&stack, res);
+                                stack_size++;
+                        } else {
+                                printf("line %d: error at %c\n", ++count, op);
+                                break;
                         }
-                        push(&stack, res);
-                        stack_size++;
                 }
                 if (c == '\n') {
                         int res = pop(&stack);
