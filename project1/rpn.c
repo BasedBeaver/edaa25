@@ -33,19 +33,6 @@ stack_node *new_stack(int data)
         return first;
 }
 
-//Method for single linked list instead of stack
-// void append(stack_node *stack_ptr, int data)
-// {
-//         stack_node *tmp = stack_ptr;
-//         while(tmp-> prev != NULL){
-//                 tmp = tmp-> prev;
-//         }
-//         tmp-> prev = malloc(sizeof(stack_node));
-//         tmp = tmp-> prev;
-//         tmp-> prev = NULL;
-//         tmp-> data = data;
-// }
-
 void push(stack_node **stack_ptr, int data)
 {
         stack_node *new = malloc(sizeof(stack_node));
@@ -77,7 +64,6 @@ int isoperand(int c)
 
 int main()
 {
-
         int stack_size = 1;
         int max_size = 11;
         int c = '\0';
@@ -86,25 +72,14 @@ int main()
         stack_node *stack = new_stack(0);
         _Bool should_push = false;
 
-
         while((c = getchar()) != EOF) {
                 if (isdigit(c)) {
                         should_push = true;
                         i = i*10 + (c - '0');
                 }
                 if (!isdigit(c)) {
-
-                        // if(stack_size < 2) {
-                        //         stack_node *stack = new_stack(i);
-                        //         stack_size++;
-                        // } else {
-                        //         push(&stack, i);
-                        //         stack_size++;
-                        // }
-
                         if (should_push) {
                                 push(&stack, i);
-                                //printf("i is %d when pushed too stack\n", i);
                         }
                         i = 0;
                         should_push = false;
@@ -130,7 +105,6 @@ int main()
                                         res = a-b;
                                         break;
                         }
-                        //printf("res is %d when pushed to stack\n", res);
                         push(&stack, res);
                         stack_size++;
                 }
@@ -139,50 +113,5 @@ int main()
                         printf("line %d: %d\n", ++count, res);
                 }
         }
-        // print_list(stack);
-
-        // char buff[101];
-        //
-        // while (fgets(buff, sizeof(buff), stdin))
-        // {
-        //         int n = strlen(buff);
-        //         buff[n-1] = '\0';
-
-                // int a = buff[0] - '0';
-                // int b = buff[1] - '0';
-                // char op = buff[2];
-                // int c;
-                //
-                // switch (op) {
-                //         case '*':
-                //                 c = a*b;
-                //                 break;
-                //         case '/':
-                //                 c = a/b;
-                //                 break;
-                //         case '+':
-                //                 c = a+b;
-                //                 break;
-                //         case '-':
-                //                 c = a-b;
-                //                 break;
-                // }
-                // printf("%d %c %d = %d\n", a, op, b, c);
-
-                // if (isdigit(c)) {
-                //         push(&stack, (c-'0'));
-                //         //putchar(c);
-                //         //printf("\n");
-                // }
-                // if (operand(c)) {
-                //         putchar(c);
-                //         printf("\n");
-                // }
-                // if (isspace(c)) {
-                //         //putchar(c);
-                //         //printf("\n");
-                // }
-        // }
-        // print_list(stack);
         return 0;
 }
