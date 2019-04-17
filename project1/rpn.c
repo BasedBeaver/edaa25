@@ -62,6 +62,16 @@ int isoperand(int c)
         return res;
 }
 
+void free_stack(int size, stack_node **stack_ptr)
+{
+        int i = 0;
+        while (i < size - 1) {
+                int tmp = pop(&stack_ptr);
+                free(tmp);
+                i++;
+        }
+}
+
 int main()
 {
         int stack_size = 1;
@@ -130,8 +140,15 @@ int main()
                         }
                 }
                 if (c == '\n') {
-                        int res = pop(&stack);
-                        printf("line %d: %d\n", ++count, res);
+                        if (stack_size > 1) {
+                                int res = pop(&stack);
+                                printf("line %d: %d\n", ++count, res);
+                        } else {
+                                printf("line %d: error at %s\n", ++count, "\\n");
+                        }
+                        printf("stack_size : %d\n", stack_size);
+                        free_stack(stack_size, &stack);
+                        printf("stack_size : %d\n", stack_size);
                 }
         }
         return 0;
