@@ -64,11 +64,10 @@ int isoperand(int c)
 
 void free_stack(int size, stack_node **stack_ptr)
 {
-        int i = 0;
-        while (i < size - 1) {
-                int tmp = pop(&stack_ptr);
-                free(tmp);
-                i++;
+        int i = size;
+        while (i > 1) {
+                int j = pop(&stack_ptr);
+                i--;
         }
 }
 
@@ -82,6 +81,7 @@ int main()
         int last_digit = 0;
         stack_node *stack = new_stack(0);
         _Bool should_push = false;
+        _Bool no_error = true;
 
         while((c = getchar()) != EOF) {
                 if (isdigit(c)) {
@@ -92,14 +92,14 @@ int main()
                 if (!isdigit(c)) {
                         if (!isoperand(c) && !isspace(c)) {
                                 printf("line %d: error at %c\n", ++count, (char)c);
-                                break;
+                                no_error = false;
                         } else if (should_push) {
                                 if (stack_size < 10) {
                                         push(&stack, i);
                                         stack_size++;
                                 } else {
                                         printf("line %d: error at %d\n", ++count, last_digit);
-                                        break;
+                                        no_error = false;
                                 }
                         }
                         i = 0;
@@ -120,7 +120,7 @@ int main()
                                         case '/':
                                                 if (b == 0) {
                                                         printf("line %d: error at %c\n", ++count, op);
-                                                        break;
+                                                        no_error = false;
                                                 } else {
                                                         res = a/b;
                                                 }
@@ -136,19 +136,20 @@ int main()
                                 stack_size++;
                         } else {
                                 printf("line %d: error at %c\n", ++count, op);
-                                break;
+                                no_error = false;
                         }
                 }
                 if (c == '\n') {
-                        if (stack_size > 1) {
+                        if (stack_size > 1 && no_error) {
                                 int res = pop(&stack);
                                 printf("line %d: %d\n", ++count, res);
                         } else {
                                 printf("line %d: error at %s\n", ++count, "\\n");
                         }
-                        printf("stack_size : %d\n", stack_size);
-                        free_stack(stack_size, &stack);
-                        printf("stack_size : %d\n", stack_size);
+                        no_error = true;
+                        // printf("stack_size : %d\n", stack_size);
+                        // free_stack(stack_size, &stack); // THIS BREAKS FOR SOME F-ING REASON!!!
+                        // printf("stack_size : %d\n", stack_size);
                 }
         }
         return 0;
