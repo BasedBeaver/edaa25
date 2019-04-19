@@ -82,7 +82,6 @@ int main()
         stack_node *stack = new_stack(0);
         _Bool should_push = false;
         _Bool no_error = true;
-        _Bool op_found = false;
 
         while((c = getchar()) != EOF) {
                 if (isdigit(c)) {
@@ -107,7 +106,6 @@ int main()
                         should_push = false;
                 }
                 if (isoperand(c)) {
-                        op_found = true;
                         char op = (char)c;
                         if (stack_size > 2) {
                                 int res;
@@ -142,20 +140,16 @@ int main()
                         }
                 }
                 if (c == '\n') {
-                        if (stack_size > 1 && no_error && op_found) {
+                        if (stack_size > 1 && no_error) {
                                 int res = pop(&stack);
-                                stack_size--;
                                 printf("line %d: %d\n", ++count, res);
                         } else {
                                 printf("line %d: error at %s\n", ++count, "\\n");
-                                if (stack_size > 1) {
-                                        printf("stack_s: %d\n", stack_size);
-                                        // free_stack(stack_size, &stack);
-                                }
                         }
                         no_error = true;
-                        op_found = false;
-                        printf("stack_size = %d\n", stack_size);
+                        // printf("stack_size : %d\n", stack_size);
+                        // free_stack(stack_size, &stack); // THIS BREAKS FOR SOME F-ING REASON!!!
+                        // printf("stack_size : %d\n", stack_size);
                 }
         }
         return 0;
