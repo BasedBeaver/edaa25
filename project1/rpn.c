@@ -152,15 +152,17 @@ int main()
                                 stack_size--;
                                 printf("line %d: %d\n", ++count, res);
                         } else {
-                                printf("line %d: error at %s\n", ++count, "\\n");
+                                if (no_error) {
+                                        printf("line %d: error at %s\n", ++count, "\\n");
+                                }
                                 if (stack_size > 1) {
-                                        printf("stack_s: %d\n", stack_size);
+                                        // printf("stack_s: %d\n", stack_size);
                                         free_stack(&stack_size, &stack);
                                 }
                         }
                         no_error = true;
                         op_found = false;
-                        printf("stack_size = %d\n", stack_size);
+                        // printf("stack_size = %d\n", stack_size);
                 }
         }
         return 0;
