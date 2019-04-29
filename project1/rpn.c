@@ -9,9 +9,16 @@ typedef struct stack_node stack_node;
 
 struct stack_node
 {
-        signed int data;
+        int data;
         stack_node *prev;
 };
+
+/*
+struct stack {
+        int stack_size = 0;
+        stack_node *head;
+};
+*/
 
 void print_list(stack_node *stack_ptr)
 {
@@ -20,7 +27,7 @@ void print_list(stack_node *stack_ptr)
         while(tmp != NULL)
         {
                 printf("[%d, %p] -> ", tmp-> data, tmp-> prev);
-                tmp = tmp-> prev;
+                tmp = tmp->prev;
         }
         printf("\n");
 }
@@ -47,8 +54,8 @@ int pop(stack_node **stack_ptr)
 {
         int res;
         stack_node *tmp = *stack_ptr;
-        *stack_ptr = (*stack_ptr)-> prev;
-        res = tmp-> data;
+        *stack_ptr = (*stack_ptr)->prev;
+        res = tmp->data;
         free(tmp);
         return res;
 }
@@ -62,19 +69,17 @@ int isoperand(int c)
         return res;
 }
 
-void free_stack(int size, stack_node **stack_ptr)
+void free_stack(int *size, stack_node **stack_ptr)
 {
-        int i = size;
-        while (i > 1) {
-                int j = pop(&stack_ptr);
-                i--;
+        while (*size > 1) {
+                int j = pop(stack_ptr);
+                (*size)--;
         }
 }
 
 int main()
 {
         int stack_size = 1;
-        int max_size = 10;
         int c = '\0';
         int count = 0;
         int i = 0;
@@ -150,7 +155,7 @@ int main()
                                 printf("line %d: error at %s\n", ++count, "\\n");
                                 if (stack_size > 1) {
                                         printf("stack_s: %d\n", stack_size);
-                                        // free_stack(stack_size, &stack);
+                                        free_stack(&stack_size, &stack);
                                 }
                         }
                         no_error = true;
