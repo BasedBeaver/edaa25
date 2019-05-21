@@ -9,21 +9,28 @@ typedef struct stack_node stack_node;
 
 struct stack_node
 {
-        signed int data;
+        int data;
         stack_node *prev;
 };
 
-void print_list(stack_node *stack_ptr)
-{
-        stack_node *tmp = stack_ptr;
-        printf("List: \n");
-        while(tmp != NULL)
-        {
-                printf("[%d, %p] -> ", tmp-> data, tmp-> prev);
-                tmp = tmp-> prev;
-        }
-        printf("\n");
-}
+/*
+struct stack {
+        int stack_size = 0;
+        stack_node *head;
+};
+*/
+
+// void print_list(stack_node *stack_ptr)
+// {
+//         stack_node *tmp = stack_ptr;
+//         printf("List: \n");
+//         while(tmp != NULL)
+//         {
+//                 printf("[%d, %p] -> ", tmp-> data, tmp-> prev);
+//                 tmp = tmp->prev;
+//         }
+//         printf("\n");
+// }
 
 stack_node *new_stack(int data)
 {
@@ -47,34 +54,28 @@ int pop(stack_node **stack_ptr)
 {
         int res;
         stack_node *tmp = *stack_ptr;
-        *stack_ptr = (*stack_ptr)-> prev;
-        res = tmp-> data;
+        *stack_ptr = (*stack_ptr)->prev;
+        res = tmp->data;
         free(tmp);
         return res;
 }
 
 int isoperand(int c)
 {
-        int res = 0;
-        if (c == '+' || c == '-' || c == '*' || c == '/') {
-                res = 1;
-        }
-        return res;
+        return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
-void free_stack(int size, stack_node **stack_ptr)
+void free_stack(int *size, stack_node **stack_ptr)
 {
-        int i = size;
-        while (i > 1) {
-                int j = pop(&stack_ptr);
-                i--;
+        while (*size > 1) {
+                pop(stack_ptr);
+                (*size)--;
         }
 }
 
 int main()
 {
         int stack_size = 1;
-        int max_size = 10;
         int c = '\0';
         int count = 0;
         int i = 0;
@@ -82,6 +83,7 @@ int main()
         stack_node *stack = new_stack(0);
         _Bool should_push = false;
         _Bool no_error = true;
+        _Bool op_found = false;
 
         while((c = getchar()) != EOF) {
                 if (isdigit(c)) {
@@ -94,7 +96,7 @@ int main()
                                 printf("line %d: error at %c\n", ++count, (char)c);
                                 no_error = false;
                         } else if (should_push) {
-                                if (stack_size < 10) {
+                                if (stack_size < 11) {
                                         push(&stack, i);
                                         stack_size++;
                                 } else {
@@ -106,9 +108,10 @@ int main()
                         should_push = false;
                 }
                 if (isoperand(c)) {
+                        op_found = true;
                         char op = (char)c;
                         if (stack_size > 2) {
-                                int res;
+                                int res = 0;
                                 int b = pop(&stack);
                                 stack_size--;
                                 int a = pop(&stack);
@@ -135,22 +138,29 @@ int main()
                                 push(&stack, res);
                                 stack_size++;
                         } else {
-                                printf("line %d: error at %c\n", ++count, op);
-                                no_error = false;
+                                if (no_error) {
+                                        printf("line %d: error at %c\n", ++count, op);
+                                        no_error = false;
+                                }
                         }
                 }
                 if (c == '\n') {
-                        if (stack_size > 1 && no_error) {
+                        if (stack_size > 1 && no_error && op_found) {
                                 int res = pop(&stack);
+                                stack_size--;
                                 printf("line %d: %d\n", ++count, res);
                         } else {
-                                printf("line %d: error at %s\n", ++count, "\\n");
+                                if (no_error) {
+                                        printf("line %d: error at %s\n", ++count, "\\n");
+                                }
+                                if (stack_size > 1) {
+                                        free_stack(&stack_size, &stack);
+                                }
                         }
                         no_error = true;
-                        // printf("stack_size : %d\n", stack_size);
-                        // free_stack(stack_size, &stack); // THIS BREAKS FOR SOME F-ING REASON!!!
-                        // printf("stack_size : %d\n", stack_size);
+                        op_found = false;
                 }
         }
+        free(stack);
         return 0;
 }
