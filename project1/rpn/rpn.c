@@ -85,7 +85,7 @@ int main()
         _Bool no_error = true;
         _Bool op_found = false;
 
-        while((c = getchar()) != EOF) {
+        while ((c = getchar()) != EOF) {
                 if (isdigit(c)) {
                         should_push = true;
                         i = i*10 + (c - '0');
@@ -93,14 +93,16 @@ int main()
                 }
                 if (!isdigit(c)) {
                         if (!isoperand(c) && !isspace(c)) {
-                                printf("line %d: error at %c\n", ++count, (char)c);
+                                printf("line %d: error at %c\n", ++count,
+                                (char)c);
                                 no_error = false;
                         } else if (should_push) {
                                 if (stack_size < 11) {
                                         push(&stack, i);
                                         stack_size++;
                                 } else {
-                                        printf("line %d: error at %d\n", ++count, last_digit);
+                                        printf("line %d: error at %d\n",
+                                        ++count, last_digit);
                                         no_error = false;
                                 }
                         }
@@ -122,7 +124,8 @@ int main()
                                                 break;
                                         case '/':
                                                 if (b == 0) {
-                                                        printf("line %d: error at %c\n", ++count, op);
+                                                        printf(
+                                "line %d: error at %c\n", ++count, op);
                                                         no_error = false;
                                                 } else {
                                                         res = a/b;
@@ -139,7 +142,8 @@ int main()
                                 stack_size++;
                         } else {
                                 if (no_error) {
-                                        printf("line %d: error at %c\n", ++count, op);
+                                        printf("line %d: error at %c\n",
+                                        ++count, op);
                                         no_error = false;
                                 }
                         }
@@ -151,7 +155,8 @@ int main()
                                 printf("line %d: %d\n", ++count, res);
                         } else {
                                 if (no_error) {
-                                        printf("line %d: error at %s\n", ++count, "\\n");
+                                        printf("line %d: error at %s\n",
+                                        ++count, "\\n");
                                 }
                                 if (stack_size > 1) {
                                         free_stack(&stack_size, &stack);
