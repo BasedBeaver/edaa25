@@ -100,7 +100,6 @@ int main()
 	//print_list(stack);
 	push(stack, 2014);
 	//print_list(stack);
-	//printf("stack size = %d and head->data = %d\n", stack->size, stack->head->data); This doesn't work for some reason
 	a = pop(stack);
 	//print_list(stack);
 	push(stack, 10);
