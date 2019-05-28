@@ -1,0 +1,26 @@
+/home/bouldergoat/edaa25/tentaplugg/stack.c: In function ‘main’:
+/home/bouldergoat/edaa25/tentaplugg/stack.c:23:10: warning: implicit declaration of function ‘new_stack’ [-Wimplicit-function-declaration]
+  stack = new_stack();
+          ^~~~~~~~~
+/home/bouldergoat/edaa25/tentaplugg/stack.c:23:8: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  stack = new_stack();
+        ^
+/home/bouldergoat/edaa25/tentaplugg/stack.c:25:2: warning: implicit declaration of function ‘push’; did you mean ‘puts’? [-Wimplicit-function-declaration]
+  push(stack, 2014);
+  ^~~~
+  puts
+/home/bouldergoat/edaa25/tentaplugg/stack.c:26:6: warning: implicit declaration of function ‘pop’; did you mean ‘popen’? [-Wimplicit-function-declaration]
+  a = pop(stack);
+      ^~~
+      popen
+/home/bouldergoat/edaa25/tentaplugg/stack.c:29:2: warning: implicit declaration of function ‘free_stack’ [-Wimplicit-function-declaration]
+  free_stack(&stack);
+  ^~~~~~~~~~
+/tmp/ccoXen43.o: In function `main':
+stack.c:(.text+0x1d): undefined reference to `new_stack'
+stack.c:(.text+0x39): undefined reference to `push'
+stack.c:(.text+0x4a): undefined reference to `pop'
+stack.c:(.text+0x63): undefined reference to `push'
+stack.c:(.text+0x79): undefined reference to `push'
+stack.c:(.text+0x8a): undefined reference to `free_stack'
+collect2: error: ld returned 1 exit status
