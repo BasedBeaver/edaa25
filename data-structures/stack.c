@@ -69,6 +69,19 @@ int pop(stack_t* stack)
 	return data;
 }
 
+// UNTESTED METHOD
+int peek(stack_t* stack)
+{
+	int data;
+	if (stack->size > 0) {
+		data = stack->head->data;
+	}
+	else {
+		data = NULL;
+	}
+	return data;
+}
+
 void free_stack(stack_t** stack)
 {
 	stack_t* p = *stack;
