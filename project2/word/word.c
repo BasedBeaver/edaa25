@@ -11,6 +11,7 @@ int main()
 		char* char_ptr;
 		char* first;
 		list = malloc(sizeof(char) * 10);
+		first = list; //is this how pointers work?
 		if (char_ptr == NULL) {
 			exit(1);
 		}
@@ -20,11 +21,18 @@ int main()
 				list = realloc(list, size*2);
 				if (list == NULL) {
 					exit(1);
-				} else {
-					size = size*2;
 				}
+
+				size = size*2;
+				&char_ptr = c;
+				char_ptr++;
+				length++;
+
 			}
-			printf("%c\n", (char)(c));
+			printf("%c", (char)(c));
+		}
+		if (!isalpha(c)) {
+			printf("\n");
 		}
 	}
 	return 0;
