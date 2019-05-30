@@ -1,39 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 int main()
 {
 	int c;
-	while((c = getchar()) != EOF) {
+	int length = 0;
+	int size = 10;
 
-		int length = 0;
-		int size = 10;
-		char* char_ptr;
-		char* first;
-		list = malloc(sizeof(char) * 10);
-		first = list; //is this how pointers work?
-		if (char_ptr == NULL) {
-			exit(1);
-		}
+	char* curr_word = malloc(sizeof(char) * size);
+	char* longest_word = malloc(sizeof(char) * size);
+	if (curr_word == NULL || longest_word == NULL) {
+		exit(1);
+	}
 
+	int curr_longest = 0;
+	while ((c = getchar()) != EOF) {
 		if (isalpha(c)) {
 			if (length >= size) {
-				list = realloc(list, size*2);
-				if (list == NULL) {
+				size *= 2;
+				curr_word = realloc(curr_word, sizeof(char) * size);
+				if (curr_word == NULL) {
 					exit(1);
 				}
-
-				size = size*2;
-				&char_ptr = c;
-				char_ptr++;
-				length++;
-
 			}
-			printf("%c", (char)(c));
+			curr_word[length++] = c;
 		}
 		if (!isalpha(c)) {
-			printf("\n");
+			if (length > curr_longest) {
+				longest_word = realloc(longest_word, sizeof(char) * length);
+				memcpy(longest_word, curr_word, length);
+				curr_longest = length;
+			}
+			length = 0;
 		}
 	}
+	printf("%d characters in longest word: %s\n", curr_longest, longest_word);
+	free(curr_word);
+	free(longest_word);
 	return 0;
 }
