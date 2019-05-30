@@ -1,0 +1,65 @@
+Begin polynomial test of (x - 1) * (x + 1)
+x - 1
+x + 1
+x^2 - 1
+End polynomial test of (x - 1) * (x + 1)
+
+Begin polynomial test of (0) * (x)
+0
+x
+0
+End polynomial test of (0) * (x)
+
+Begin polynomial test of (x^2 + x + 1) * (x - 1)
+x^2 + x + 1
+x - 1
+x^3 - 1
+End polynomial test of (x^2 + x + 1) * (x - 1)
+
+Begin polynomial test of (-x) * (-x)
+-x
+-x
+x^2
+End polynomial test of (-x) * (-x)
+
+Begin polynomial test of (0) * (1)
+0
+1
+0
+End polynomial test of (0) * (1)
+
+Begin polynomial test of (-x) * (x)
+-x
+x
+-x^2
+End polynomial test of (-x) * (x)
+
+Begin polynomial test of (-x) * (1)
+-x
+1
+-x
+End polynomial test of (-x) * (1)
+
+Begin polynomial test of (-572x^216 - 936x^124 - 746x^25 - 739) * (-x^205 + 601x^114 + 324x^58 - 576x^43 + 376x^40 + 469)
+-572x^216 - 936x^124 - 746x^25 - 739
+-x^205 + 601x^114 + 324x^58 - 576x^43 + 376x^40 + 469
+572x^421 - 343772x^330 + 936x^329 - 185328x^274 + 329472x^259 - 215072x^256 - 562536x^238 + 746x^230 - 268268x^216 + 739x^205 - 303264x^182 + 539136x^167 - 351936x^164 - 448346x^139 - 438984x^124 - 444139x^114 - 241704x^83 + 429696x^68 - 280496x^65 - 239436x^58 + 425664x^43 - 277864x^40 - 349874x^25 - 346591
+End polynomial test of (-572x^216 - 936x^124 - 746x^25 - 739) * (-x^205 + 601x^114 + 324x^58 - 576x^43 + 376x^40 + 469)
+
+Begin polynomial test of (x + 2) * (-3x - 4)
+x + 2
+-3x - 4
+-3x^2 - 10x - 8
+End polynomial test of (x + 2) * (-3x - 4)
+
+Begin polynomial test of (x^2 - 7x + 1) * (3x + 2)
+x^2 - 7x + 1
+3x + 2
+3x^3 - 19x^2 - 11x + 2
+End polynomial test of (x^2 - 7x + 1) * (3x + 2)
+
+Begin polynomial test of (x^10000000 + 2) * (2x^2 + 3x + 4)
+x^10000000 + 2
+2x^2 + 3x + 4
+2x^10000002 + 3x^10000001 + 4x^10000000 + 4x^2 + 6x + 8
+End polynomial test of (x^10000000 + 2) * (2x^2 + 3x + 4)
