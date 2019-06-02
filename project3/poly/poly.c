@@ -40,7 +40,7 @@ poly_t*	new_poly_from_string(const char* poly_str)
 
 	int i;
 	int curr_coeff = 1;
-	int last_coeff = 0;
+	int end_coeff = 0;
 	int sign = 1;
 	int size_c = 0;
 
@@ -67,11 +67,11 @@ poly_t*	new_poly_from_string(const char* poly_str)
 		else if (isdigit(poly_str[i])) {
 			curr_coeff = nbr_from_string(poly_str, &i);
 			if (poly_str[i] != 'x') {
-				last_coeff = 1;
+				end_coeff = 1;
 			}
 		}
 	}
-	if (last_coeff != 0) {
+	if (end_coeff) {
 		poly->coeff[size_c] = curr_coeff;
 		poly->exp[size_c++] = 0;
 	}
