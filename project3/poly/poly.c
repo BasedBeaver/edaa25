@@ -30,7 +30,8 @@ int nbr_from_string(const char* poly_str, int* i)
 {
 	int nbr = 0;
 	while (isdigit(poly_str[*i])) {
-		nbr = nbr*10 + (poly_str[*i++] - '0');
+		nbr = nbr*10 + (int)(poly_str[*i] - '0');
+		i++;
 	}
 	return nbr;
 }
