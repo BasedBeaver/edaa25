@@ -92,7 +92,8 @@ poly_t*	mul(poly_t* p1, poly_t* p2)
 	for (int i = 0; i < p1->size; i++) {
 		for (int j = 0; j < p2->size; j++) {
 			r->exp[size_c] = p1->exp[i] + p2->exp[j];
-			r->coeff[size_c++] = p1->coeff[i] * p2->coeff[j];
+			r->coeff[size_c] = p1->coeff[i] * p2->coeff[j];
+			size_c++;
 		}
 	}
 
