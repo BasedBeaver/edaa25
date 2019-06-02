@@ -1,11 +1,5 @@
-#include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "poly.h"
-#include "error.h"
-
-#define MAX_SIZE	(10000)
 
 static void poly_test(const char* a, const char* b)
 {
@@ -20,7 +14,9 @@ static void poly_test(const char* a, const char* b)
 
 	print_poly(p);
 	print_poly(q);
+
 	r = mul(p, q);
+
 	print_poly(r);
 
 	free_poly(p);
@@ -30,57 +26,11 @@ static void poly_test(const char* a, const char* b)
 	printf("End polynomial test of (%s) * (%s)\n", a, b);
 }
 
-static int read_poly(char* p, size_t n)
+int main(void)
 {
-	int		c;
-	size_t		i;
-	char		stop[] = ",\n";
-
-	i = 0;
-
-	while ((c = getchar()) != EOF && strchr(stop, c) == NULL) {
-		if (i == n)
-			error("unexpected input size");
-
-		p[i] = c;
-		i += 1;
-	}
-
-	p[i] = 0;
-
-	if (c != EOF)
-		ungetc(c, stdin); 
-
-	return i;
-}
-
-int main(int argc, char** argv)
-{
-	static char	p[MAX_SIZE];
-	static char	q[MAX_SIZE];
-	int		c;
-	int		first = 1;	
-
-	progname = argv[0];
-
-	while (read_poly(p, sizeof p)) {
-
-		/* print empty line between tests. */
-		if (first)
-			first = 0;
-		else
-			putchar('\n');
-
-		c = getchar();
-		if (c != ',')
-			error("expected ,");
-
-		read_poly(q, sizeof q);
-		c = getchar();
-		if (c != '\n')
-			error("expected \\n");
-		poly_test(p, q);
-	}
+	poly_test("x^2 - 7x + 1", "3x + 2");
+	putchar('\n');
+	poly_test("x^10000000 + 2", "2x^2 + 3x + 4");
 
 	return 0;
 }

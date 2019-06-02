@@ -1,9 +1,7 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "error.h"
 #include "poly.h"
@@ -25,12 +23,15 @@ struct poly_t* new_poly()
 	p->size = 0;
 	return p;
 }
+void bp()
+{
 
+}
 int nbr_from_string(const char* poly_str, int* i)
 {
 	int nbr = 0;
 	while (isdigit(poly_str[*i])) {
-		nbr = nbr*10 + (int)(poly_str[*i] - '0');
+		nbr = nbr*10 + (poly_str[*i] - '0');
 		i++;
 	}
 	return nbr;
@@ -38,6 +39,7 @@ int nbr_from_string(const char* poly_str, int* i)
 
 poly_t*	new_poly_from_string(const char* poly_str)
 {
+	bp();
 	struct poly_t* poly = new_poly();
 
 	int i;

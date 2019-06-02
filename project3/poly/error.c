@@ -4,7 +4,7 @@
 
 #include "error.h"
 
-void (error)(const char* file, int line, const char* func, char* msg, ...)
+void (error)(char* file, int line, const char* func, char* msg, ...)
 {
 	va_list		ap;
 	static char	colon[] = ": ";
