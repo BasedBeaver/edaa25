@@ -1,10 +1,15 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+#include <ctype.h>
 
+#include "error.h"
 #include "poly.h"
 
-#define MAX_SIZE 100
+
+#define MAX_SIZE 10
 
 struct poly_t {
 	int coeff[MAX_SIZE];
@@ -21,17 +26,57 @@ struct poly_t* new_poly()
 	return p;
 }
 
-poly_t*	new_poly_from_string(const char* c)
+int nbr_from_string(const char* poly_str, int* i)
+{
+	int nbr = 0;
+	while (isdigit(poly_str[*i])) {
+		nbr = nbr*10 + (poly_str[*i++] - '0');
+	}
+	return nbr;
+}
+
+poly_t*	new_poly_from_string(const char* poly_str)
 {
 	struct poly_t* poly = new_poly();
-	printf("TRYING TO PRINT SOME%s\n", c);
 
-	for (i = 0; i < strlen(str); i++) {
+	int i;
+	int curr_coeff = 1;
+	int last_coeff = 0;
+	int sign = 1;
+	int size_c = 0;
 
+	for (i = 0; i < strlen(poly_str); i++) {
+		if (i > 0 && (poly_str[i-1] == 'x' && poly_str[i] == ' ')) {
+			poly->coeff[size_c] =  curr_coeff * sign;
+			poly->exp[size_c] = 1;
+			sign = 1;
+			curr_coeff = 1;
+			size_c++;
 
-
+		}
+		else if (poly_str[i] == '^') {
+			i++;
+			int exp = nbr_from_string(poly_str, &i);
+			poly->coeff[size_c] =  curr_coeff * sign;
+			poly->exp[size_c++] = exp;
+			sign = 1;
+			curr_coeff = 1;
+		}
+		else if (poly_str[i] == '-') {
+			sign = -1;
+		}
+		else if (isdigit(poly_str[i])) {
+			curr_coeff = nbr_from_string(poly_str, &i);
+			if (poly_str[i] != 'x') {
+				last_coeff = 1;
+			}
+		}
 	}
-
+	if (last_coeff != 0) {
+		poly->coeff[size_c] = curr_coeff;
+		poly->exp[size_c++] = 0;
+	}
+	poly->size = size_c;
 
 	return poly;
 }
@@ -43,10 +88,69 @@ void free_poly(poly_t* p)
 
 poly_t*	mul(poly_t* p1, poly_t* p2)
 {
-	return NULL;
+	struct poly_t* r = new_poly();
+	int size_c = 0;
+	for (int i = 0; i < p1->size; i++) {
+		for (int j = 0; j < p2->size; j++) {
+			r->exp[size_c] = p1->exp[i] + p2->exp[j];
+			r->coeff[size_c++] = p1->coeff[i] * p2->coeff[j];
+		}
+	}
+
+	r->size = size_c;
+
+	for (int i = 0; i < r->size - 1; i++) {
+		for (int j = i + 1; j < r->size; j++) {
+			if (r->exp[i] == r->exp[j]) {
+				r->coeff[i] += r->coeff[j];
+				r->coeff[j] = 0;
+			}
+		}
+	}
+
+	return r;
 }
 
-void print_poly(poly_t* p)
+void print_poly(poly_t* poly)
 {
-	printf("printpoly\n");
+	int i;
+	for (i = 0; i < poly->size; i++) {
+		if (poly->coeff[i] == 0)
+			continue;
+		if (poly->coeff[i] > 1) {
+			if (poly->exp[i] == 0)
+				printf("%d", poly->coeff[i]);
+			else if (poly->exp[i] == 1)
+				printf("%dx", poly->coeff[i]);
+			else
+				printf("%dx^%d", poly->coeff[i], poly->exp[i]);
+		}
+		else if (poly->coeff[i] == 1 || poly->coeff[i] == -1 ) {
+			if (poly->exp[i] == 0)
+				printf("%d", poly->coeff[i]);
+			else if (poly->exp[i] == 1)
+				printf("x");
+			else
+				printf("x^%d", poly->exp[i]);
+		}
+		else if (poly->coeff[i] < 0) {
+			if (poly->exp[i] == 0)
+				printf("%d", poly->coeff[i] * - 1);
+			else if (poly->exp[i] == 1)
+				printf("%dx", poly->coeff[i] * -1);
+			else
+				printf("%dx^%d", poly->coeff[i] * -1, poly->exp[i]);
+
+		}
+		while (i + 1 < poly->size && poly->coeff[i+1] == 0)
+			i++;
+		if (i + 1 < poly->size && poly->coeff[i+1] != 0) {
+			if (poly->coeff[i+1] > 0)
+				printf(" + ");
+			else
+				printf(" - ");
+		}
+	}
+	putchar('\n');
+
 }
