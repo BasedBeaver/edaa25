@@ -23,23 +23,19 @@ struct poly_t* new_poly()
 	p->size = 0;
 	return p;
 }
-void bp()
-{
 
-}
 int nbr_from_string(const char* poly_str, int* i)
 {
 	int nbr = 0;
 	while (isdigit(poly_str[*i])) {
 		nbr = nbr*10 + (poly_str[*i] - '0');
-		i++;
+		(*i)++;
 	}
 	return nbr;
 }
 
 poly_t*	new_poly_from_string(const char* poly_str)
 {
-	bp();
 	struct poly_t* poly = new_poly();
 
 	int i;
