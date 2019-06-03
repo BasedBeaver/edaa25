@@ -114,43 +114,64 @@ poly_t*	mul(poly_t* p1, poly_t* p2)
 void print_poly(poly_t* poly)
 {
 	int i;
-	for (i = 0; i < poly->size; i++) {
-		if (poly->coeff[i] == 0)
-			continue;
-		if (poly->coeff[i] > 1) {
-			if (poly->exp[i] == 0)
-				printf("%d", poly->coeff[i]);
-			else if (poly->exp[i] == 1)
-				printf("%dx", poly->coeff[i]);
-			else
-				printf("%dx^%d", poly->coeff[i], poly->exp[i]);
-		}
-		else if (poly->coeff[i] == 1 || poly->coeff[i] == -1 ) {
-			if (poly->exp[i] == 0)
-				printf("%d", poly->coeff[i]);
-			else if (poly->exp[i] == 1)
-				printf("x");
-			else
-				printf("x^%d", poly->exp[i]);
-		}
-		else if (poly->coeff[i] < 0) {
-			if (poly->exp[i] == 0)
-				printf("%d", poly->coeff[i] * - 1);
-			else if (poly->exp[i] == 1)
-				printf("%dx", poly->coeff[i] * -1);
-			else
-				printf("%dx^%d", poly->coeff[i] * -1, poly->exp[i]);
+	int size = poly->size;
 
+	for (i = 0; i < size; i++) {
+
+		int coeff = poly->coeff[i];
+		int coeff_plus_1 = poly->coeff[i + 1];
+                int exp = poly->exp[i];
+
+		if (coeff == 0) {
+			continue;
 		}
-		while (i + 1 < poly->size && poly->coeff[i+1] == 0)
+		if (coeff > 1) {
+			if (exp == 0) {
+				printf("%d", coeff);
+			}
+			else if (exp == 1) {
+				printf("%dx", coeff);
+			}
+			else {
+				printf("%dx^%d", coeff, exp);
+			}
+		}
+		else if (coeff == 1 || coeff == (-1)) {
+			if (exp == 0) {
+				printf("%d", coeff);
+			}
+			else if (exp == 1) {
+				printf("x");
+			}
+			else {
+				printf("x^%d", exp);
+			}
+		}
+		else if (coeff < 0) {
+			if (exp == 0) {
+				printf("%d", coeff * (-1));
+			}
+			else if (exp == 1) {
+				printf("%dx", coeff * (-1));
+			}
+			else {
+				printf("%dx^%d", coeff * (-1), exp);
+			}
+		}
+
+		while (i + 1 < size && coeff_plus_1 == 0) {
 			i++;
-		if (i + 1 < poly->size && poly->coeff[i+1] != 0) {
-			if (poly->coeff[i+1] > 0)
+			coeff_plus_1 = poly->coeff[i + 1];
+		}
+
+		if (i + 1 < size && coeff_plus_1 != 0) {
+			if (coeff_plus_1 > 0) {
 				printf(" + ");
-			else
+			}
+			else {
 				printf(" - ");
+			}
 		}
 	}
 	putchar('\n');
-
 }
